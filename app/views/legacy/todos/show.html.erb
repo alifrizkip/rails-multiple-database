@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @legacy_todo.name %>
+</p>
+
+<p>
+  <strong>Detail:</strong>
+  <%= @legacy_todo.detail %>
+</p>
+
+<p>
+  <strong>Is done:</strong>
+  <%= @legacy_todo.is_done %>
+</p>
+
+<%= link_to 'Edit', edit_legacy_todo_path(@legacy_todo) %> |
+<%= link_to 'Back', legacy_todos_path %>

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Legacy Todos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Detail</th>
+      <th>Is done</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @legacy_todos.each do |legacy_todo| %>
+      <tr>
+        <td><%= legacy_todo.name %></td>
+        <td><%= legacy_todo.detail %></td>
+        <td><%= legacy_todo.is_done %></td>
+        <td><%= link_to 'Show', legacy_todo %></td>
+        <td><%= link_to 'Edit', edit_legacy_todo_path(legacy_todo) %></td>
+        <td><%= link_to 'Destroy', legacy_todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Legacy Todo', new_legacy_todo_path %>

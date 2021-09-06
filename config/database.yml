@@ -27,11 +27,9 @@ development:
   legacy:
     adapter: sqlserver
     url: <%= ENV['DEV_LEGACY_DATABASE_URL'] %>
+    use_metadata_table: false
     migrations_paths:
     - "db/legacy_migrate"
-    # appname: rails_multi_db
-  #   encoding: unicode
-  #   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
   primary:
     adapter: postgresql
