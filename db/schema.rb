@@ -10,9 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_06_163339) do
+ActiveRecord::Schema.define(version: 2021_09_06_164348) do
 
-  create_table "legacy_todos", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "todos", force: :cascade do |t|
     t.string "name"
     t.string "detail"
     t.boolean "is_done"

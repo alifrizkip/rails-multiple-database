@@ -1,7 +1,12 @@
 FROM ruby:3.0.2-alpine
 
-RUN addgroup -g 1000 -S alip
-RUN adduser -u 1000 -S alip -G alip
+ENV _UID_ 1000
+ENV _GID_ 1000
+ENV _USERNAME_ alip
+ENV _GROUPNAME_ alip
+
+RUN addgroup -g ${_GID_} -S ${_GROUPNAME_}
+RUN adduser -u ${_UID_} -S ${_USERNAME_} -G ${_GROUPNAME_}
 
 # <MSSQL>
 # MSSQL_VERSION can be changed, by passing `--build-arg MSSQL_VERSION=<new version>` during docker build
@@ -62,10 +67,10 @@ RUN apk add --no-cache --virtual \
 RUN mkdir /gems
 RUN mkdir /app
 ENV BUNDLE_PATH /gems
-RUN chown -Rf 1000:1000 /app/
-RUN chown -Rf 1000:1000 /gems/
+RUN chown -Rf ${_USERNAME_}:${_GROUPNAME_} /app/
+RUN chown -Rf ${_USERNAME_}:${_GROUPNAME_} /gems/
 
-USER 1000:1000
+USER ${_USERNAME_}:${_GROUPNAME_}
 WORKDIR /app
 COPY . /app/
 
