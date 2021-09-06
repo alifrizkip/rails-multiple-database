@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=rails-multi-db
+    expose:
+      - "5432"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2017-CU8-ubuntu
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=yourStrong(!)Password
+    expose: 
+      - "1433"
+
+  redis:
+    image: redis:6.0.7-alpine
+    expose:
+      - "6379"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bin/rails s -b 0.0.0.0
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - DEV_PRIMARY_DATABASE_URL=postgres://postgres:password@postgres:5432/rails-multi-db
+      - DEV_LEGACY_DATABASE_URL=sqlserver://sa:yourStrong(!)Password@mssql-server:1433/rails-multi-db
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - .:/app
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bundle exec sidekiq
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - DEV_PRIMARY_DATABASE_URL=postgres://postgres:password@postgres:5432/rails-multi-db
+      - DEV_LEGACY_DATABASE_URL=sqlserver://sa:yourStrong(!)Password@mssql-server:1433/rails-multi-db
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:

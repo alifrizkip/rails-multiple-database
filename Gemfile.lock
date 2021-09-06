@@ -47,6 +47,9 @@ GEM
     activerecord (6.1.4.1)
       activemodel (= 6.1.4.1)
       activesupport (= 6.1.4.1)
+    activerecord-sqlserver-adapter (6.1.2.0)
+      activerecord (~> 6.1.0)
+      tiny_tds
     activestorage (6.1.4.1)
       actionpack (= 6.1.4.1)
       activejob (= 6.1.4.1)
@@ -77,6 +80,7 @@ GEM
       xpath (~> 3.2)
     childprocess (3.0.0)
     concurrent-ruby (1.1.9)
+    connection_pool (2.2.5)
     crass (1.0.6)
     erubi (1.10.0)
     ffi (1.15.4)
@@ -97,12 +101,10 @@ GEM
     marcel (1.0.1)
     method_source (1.0.0)
     mini_mime (1.1.1)
-    mini_portile2 (2.6.1)
     minitest (5.14.4)
     msgpack (1.4.2)
     nio4r (2.5.8)
-    nokogiri (1.12.4)
-      mini_portile2 (~> 2.6.1)
+    nokogiri (1.12.4-x86_64-linux)
       racc (~> 1.4)
     pg (1.2.3)
     public_suffix (4.0.6)
@@ -146,6 +148,7 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.4.0)
     regexp_parser (2.1.1)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
@@ -162,6 +165,10 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
+    sidekiq (6.2.2)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     spring (2.1.1)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -172,6 +179,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (1.1.0)
     tilt (2.0.10)
+    tiny_tds (2.1.5)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -199,9 +207,10 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
-  ruby
+  x86_64-linux-musl
 
 DEPENDENCIES
+  activerecord-sqlserver-adapter
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
@@ -213,7 +222,9 @@ DEPENDENCIES
   rails (~> 6.1.4)
   sass-rails (>= 6)
   selenium-webdriver
+  sidekiq
   spring
+  tiny_tds
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
@@ -221,7 +232,7 @@ DEPENDENCIES
   webpacker (~> 5.0)
 
 RUBY VERSION
-   ruby 2.5.5p157
+   ruby 3.0.2p107
 
 BUNDLED WITH
-   2.1.4
+   2.2.22

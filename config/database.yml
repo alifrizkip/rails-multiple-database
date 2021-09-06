@@ -22,8 +22,20 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
-  database: rails_multi_db_development
+  # <<: *default
+  # database: rails_multi_db_development
+  legacy:
+    adapter: sqlserver
+    appname: rails_multi_db
+    url: <%= ENV['DEV_LEGACY_DATABASE_URL'] %>
+  #   encoding: unicode
+  #   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+  primary:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    url: <%= ENV['DEV_PRIMARY_DATABASE_URL'] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
