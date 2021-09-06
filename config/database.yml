@@ -26,8 +26,10 @@ development:
   # database: rails_multi_db_development
   legacy:
     adapter: sqlserver
-    appname: rails_multi_db
     url: <%= ENV['DEV_LEGACY_DATABASE_URL'] %>
+    migrations_paths:
+    - "db/legacy_migrate"
+    # appname: rails_multi_db
   #   encoding: unicode
   #   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
